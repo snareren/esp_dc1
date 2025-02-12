@@ -668,8 +668,10 @@ void DC1::switchRelay(uint8_t ch, bool isOn, bool isSave)
     if (isSave && config.power_on_state > 0)
     {
         bitWrite(config.last_state, ch, isOn);
-        bitSet(operationFlag, 1);
-        Config::delaySaveConfig(10);
+        //bitSet(operationFlag, 1);
+        //Config::delaySaveConfig(10);
+        bitSet(operationFlag, 0);
+        Debug::AddInfo(PSTR("my_test DC1::switchRelay delaysaveconfig"));
     }
 
     if (ch == 0)
@@ -765,7 +767,7 @@ void DC1::energyUpdate()
     {
         energyUpdateToday();
     }
-    if (perSecond % 3600 == 0 && cse7766->Energy.kWhtoday > 0)
+    if (perSecond % 21600 == 0 && cse7766->Energy.kWhtoday > 0)
     {
         energySync();
         Config::saveConfig();
