@@ -671,7 +671,7 @@ void DC1::switchRelay(uint8_t ch, bool isOn, bool isSave)
         //bitSet(operationFlag, 1);
         //Config::delaySaveConfig(10);
         bitSet(operationFlag, 0);
-        //Debug::AddInfo(PSTR("my_test DC1::switchRelay delaysaveconfig"));
+        Debug::AddInfo(PSTR("DC1::switchRelay delaysaveconfig"));
     }
 
     if (ch == 0)
@@ -758,7 +758,7 @@ void DC1::energyUpdate()
         config.energy_kWhdoy = Rtc::rtcTime.day_of_year;
         config.energy_kWhyesterday = config.energy_kWhtoday;
         config.energy_kWhtoday = 0;
-        //Config::saveConfig();
+        Config::saveConfig();
 
         cse7766->Energy.daily = (float)(config.energy_kWhtoday + cse7766->Energy.kWhtoday) / 100000;
         cse7766->Energy.total = (float)(config.energy_kWhtotal + cse7766->Energy.kWhtoday) / 100000;
@@ -770,7 +770,7 @@ void DC1::energyUpdate()
     if (perSecond % 21600 == 0 && cse7766->Energy.kWhtoday > 0)
     {
         energySync();
-        //Config::saveConfig();
+        Config::saveConfig();
     }
     energyMarginCheck();
 }
@@ -808,7 +808,7 @@ void DC1::energyClear()
     cse7766->Energy.kWhtoday_delta = 0;
 
     energyInit();
-    //Config::saveConfig();
+    Config::saveConfig();
 }
 
 void DC1::energyUpdateToday()
